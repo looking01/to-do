@@ -8,28 +8,32 @@ import { Form } from "./components/Form";
 const contentElement = document.querySelector('.content') as HTMLElement;
 const itemTemplate = document.querySelector('#todo-item-template') as HTMLTemplateElement;
 const formTemplate = document.querySelector('#todo-form-template') as HTMLTemplateElement;
+const todoArray = new ToDoModel();
+todoArray.items = todos;
 
 const page = new Page(contentElement);
 const todoForm = new Form(formTemplate);
-todoForm
+todoForm.setHandler(handleSubmitForm)
 
+page.formContainer = todoForm.render();
 
 
 function handleSubmitForm(data: string) {
-  const todoItem = new Item(template);
-  const itemElement = todoItem.render({id: "8", name: data});
-  contentElement.prepend(itemElement);
-  todoForm.clearValue();
+  todoArray.addItem(data);
+  renderTodoItems();
 }
 
-todos.forEach(item => {
-  const todoItem = new Item (template);
-  const itemElement = todoItem.render(item);
-  contentElement.prepend(itemElement);
-})
+function renderTodoItems() {
+  page.todoContainer = todoArray.items.map(item => {
+    const todoItem = new Item (itemTemplate);
+    const itemElement = todoItem.render(item);
+    return(itemElement)
+  })
+}
 
-const todoArray = new ToDoModel();
-todoArray.items = todos;
+renderTodoItems();
+
+
 
 
 

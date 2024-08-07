@@ -1,22 +1,22 @@
 export interface IPage {
-  todoContainer: HTMLElement[];
   formContainer: HTMLElement;
+  todoContainer: HTMLElement[];
 }
 
 export class Page implements IPage {
-  _todoContainer: HTMLElement;
   _formContainer: HTMLElement;
+  _todoContainer: HTMLElement;
 
   constructor(protected container: HTMLElement) {
-    this._todoContainer = this.container.querySelector('.todos__list');
     this._formContainer = this.container.querySelector('.todo-form-container')
+    this._todoContainer = this.container.querySelector('.todos__list');
   }
 
   set todoContainer(items: HTMLElement[]) {
     this._todoContainer.replaceChildren(...items);
   }
 
-  set formContainer(formElement: HTMLFormElement) {
+  set formContainer(formElement: HTMLFormElement | null) {
     if(formElement) {
       this._formContainer.replaceChildren(formElement);
     } else {
